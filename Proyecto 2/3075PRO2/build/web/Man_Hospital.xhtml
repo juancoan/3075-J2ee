@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Mantenimiento de Hospitales</title>
+    </h:head>
+    <h:body>
+              
+       
+        <f:event type="preRenderView" listener="#{hospitalBean.listar()}" />
+       
+        
+                <h:form id="editor">
+                A continuación introduzca los datos si desea agrear un nuevo registro.
+                <br/><br/>
+                
+                <p:panelGrid columns="2">
+                <p:outputLabel value="Codigo Localizacion" />
+                <p:inputText id="txtCod_Loc" value="#{hospitalBean.hospital.cod_loc}" />
+                
+                <p:outputLabel value="Nombre" />
+                <p:inputText id="txtNombre" value="#{hospitalBean.hospital.nombre}" />
+                
+                <p:commandButton value="Registrar" actionListener="#{hospitalBean.registrar()}" update="data"/>
+                
+                   
+                 </p:panelGrid>   
+                
+                 <br/><br/>
+                                
+                 <p:dataTable id="data" value="#{hospitalBean.listaHospitales}" var="hospitales" >
+                   
+                    <p:column headerText="Codigo Hospital" >
+                        <p:outputLabel value="#{hospitales.cod_hospital}" />
+                    </p:column>
+                     <p:column headerText="Localizacion" >
+                         <p:outputLabel value="#{hospitales.cod_loc}" />
+                    </p:column>
+                     <p:column headerText="Nombre" >
+                         <p:outputLabel value="#{hospitales.nombre}">
+                     </p:outputLabel>
+                    </p:column>
+                     
+                    <p:column headerText="Modificar">
+                        <p:commandLink value="Modificar" actionListener="#{hospitalBean.leerID(hospitales)}" oncomplete="PF('widDatos').show();" update=":dlDatos" />
+                    </p:column>
+                    <p:column headerText="Eliminar">
+                        <p:commandLink value="Eliminar" actionListener="#{hospitalBean.eliminar(hospitales)}" update="data" />
+                   </p:column>
+                </p:dataTable>
+                
+                </h:form>
+        
+        
+        <p:dialog header="Sub Menú de Modificación" widgetVar="widDatos" id="dlDatos">
+            <h:form>
+                <p:panelGrid columns="2">
+                    
+                <p:outputLabel value="Codigo de Hospital" />
+                <p:outputLabel value="#{hospitalBean.hospital.cod_hospital}" />
+                
+                <p:outputLabel value="Locacion" />
+                <p:inputText value="#{hospitalBean.hospital.cod_loc}" />
+                
+                <p:outputLabel value="Nombre" />
+                <p:inputText value="#{hospitalBean.hospital.nombre}" />
+              
+                <p:commandButton value="Modificar" actionListener="#{hospitalBean.modificar()}" oncomplete="PF('widDatos').hide();" update=":editor:data"/>
+                <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('widDatos').hide();" />
+                
+                </p:panelGrid>
+                
+             
+            </h:form>
+        </p:dialog>
+          
+    </h:body>
+</html>
+

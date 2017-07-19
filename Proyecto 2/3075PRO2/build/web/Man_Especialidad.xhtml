@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+              
+       
+        <f:event type="preRenderView" listener="#{especialidadBean.listar()}" />
+        
+        
+                <h:form id="editor">
+                A continuación introduzca los datos si desea agrear un nuevo registro.
+                <br/><br/>
+              
+                <p:outputLabel for="txtNombre" value="Especialidad" />
+                <p:inputText id="txtNombre" value="#{especialidadBean.especialidad.nombre}" />
+                <br />
+                <br />
+                
+                <p:commandButton value="Registrar" actionListener="#{especialidadBean.registrar()}" action="#{especialidadBean.listar()}"  update="data"/>
+                
+                <br/><br/>
+                    
+                    
+                
+                <p:dataTable id="data" value="#{especialidadBean.listaEspecialidades}" var="especialidades" >
+                
+                   
+                    <p:column headerText="Codigo Localizacion" >
+                        <p:outputLabel value="#{especialidades.cod_especialidad}" />
+                    </p:column>
+                     <p:column headerText="Especialidad" >
+                         <p:outputLabel value="#{especialidades.nombre}">
+                      
+                    </p:outputLabel>
+                    </p:column>
+                    
+                    <p:column headerText="Modificar">
+                        <p:commandLink value="Modificar" actionListener="#{especialidadBean.leerID(especialidades)}" oncomplete="PF('widDatos').show();" update=":dlDatos" />
+                    </p:column>
+                    <p:column headerText="Eliminar">
+                        <p:commandLink value="Eliminar" actionListener="#{especialidadBean.eliminar(especialidades)}" update="data" />
+                    </p:column>
+                </p:dataTable>
+                
+                </h:form>
+        
+        
+        <p:dialog header="Sub Menú de Modificación" widgetVar="widDatos" id="dlDatos">
+            <h:form>
+                <p:panelGrid columns="2">
+                    
+                <p:outputLabel value="Codigo" />
+                <p:outputLabel value="#{especialidadBean.especialidad.cod_especialidad}" />
+                
+                <p:outputLabel value="Especialidad" />
+                <p:inputText value="#{especialidadBean.especialidad.nombre}"/> 
+                
+                
+                <p:commandButton value="Modificar" actionListener="#{especialidadBean.modificar()}" oncomplete="PF('widDatos').hide();" update=":editor:data"/>
+                <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('widDatos').hide();" />
+                
+                </p:panelGrid>
+                
+             
+            </h:form>
+        </p:dialog>
+          
+    </h:body>
+</html>
+

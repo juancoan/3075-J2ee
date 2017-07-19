@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Mantenimiento de Ponencias</title>
+    </h:head>
+    <h:body>
+              
+       
+        <f:event type="preRenderView" listener="#{ponenciaBean.listar()}" />
+       
+        
+                <h:form id="editor">
+                A continuación introduzca los datos si desea agrear un nuevo registro.
+                <br/><br/>
+                
+                <p:panelGrid columns="2">
+                <p:outputLabel value="Codigo Congreso" />
+                <p:inputText id="txtNom_Con" value="#{ponenciaBean.ponencia.cod_congreso}" />
+                
+                <p:outputLabel value="Titulo" />
+                <p:inputText id="txtTitulo" value="#{ponenciaBean.ponencia.titulo}" />
+                
+                <p:commandButton value="Registrar" actionListener="#{ponenciaBean.registrar()}" update="data"/>
+                   
+                 </p:panelGrid>   
+                
+                 <br/><br/>
+                                
+                 <p:dataTable id="data" value="#{ponenciaBean.listaPonencias}" var="ponencias" >
+                   
+                    <p:column headerText="Codigo Ponencia" >
+                        <p:outputLabel value="#{ponencias.cod_ponencia}" />
+                    </p:column>
+                    <p:column headerText="Codigo Congreso" >
+                        <p:outputLabel value="#{ponencias.cod_congreso}" />
+                    </p:column>
+                    <p:column headerText="Titulo" >
+                        <p:outputLabel value="#{ponencias.titulo}" />
+                    </p:column>
+                    
+                    <p:column headerText="Modificar">
+                        <p:commandLink value="Modificar" actionListener="#{ponenciaBean.leerID(ponencias)}" oncomplete="PF('widDatos').show();" update=":dlDatos" />
+                    </p:column>
+                    <p:column headerText="Eliminar">
+                        <p:commandLink value="Eliminar" actionListener="#{ponenciaBean.eliminar(ponencias)}" update="data" />
+                    </p:column>
+                </p:dataTable>
+                
+                </h:form>
+        
+        
+        <p:dialog header="Sub Menú de Modificación" widgetVar="widDatos" id="dlDatos">
+            <h:form>
+                <p:panelGrid columns="2">
+                    
+                <p:outputLabel value="Codigo Ponencia" />
+                <p:outputLabel value="#{ponenciaBean.ponencia.cod_ponencia}" />
+                
+                <p:outputLabel value="Codigo Congreso" />
+                <p:inputText value="#{ponenciaBean.ponencia.cod_congreso}" />
+                
+                <p:outputLabel value="Titulo" />
+                <p:inputText value="#{ponenciaBean.ponencia.titulo}" />
+              
+                <p:commandButton value="Modificar" actionListener="#{ponenciaBean.modificar()}" oncomplete="PF('widDatos').hide();" update=":editor:data"/>
+                <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('widDatos').hide();" />
+                
+                </p:panelGrid>
+                
+             
+            </h:form>
+        </p:dialog>
+          
+    </h:body>
+</html>
+

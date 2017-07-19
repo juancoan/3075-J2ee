@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Mantenimiento Medicos</title>
+    </h:head>
+    <h:body>
+              
+       
+        
+      
+        <f:event type="preRenderView" listener="#{congresoBean.listar()}" />
+                <h:form id="editor">
+                A continuación introduzca los datos si desea agrear un nuevo registro.
+                <br/><br/>
+                
+                <p:panelGrid columns="2">
+                <p:outputLabel value="Locacion" />
+                <p:inputText id="txtLoc" value="#{congresoBean.congreso.cod_loc}" />
+                
+                
+                <p:outputLabel for="button" value="Fecha:"  />
+                <p:calendar id="button" value="#{congresoBean.congreso.fecha}" showOn="button" readonlyInput="true"  />
+                              
+                <p:outputLabel value="Titulo" />
+                <p:inputText id="txtTitulo" value="#{congresoBean.congreso.titulo}" />
+                
+                <p:commandButton value="Registrar" actionListener="#{congresoBean.registrar()}" update="data"/>
+                
+               
+                    
+                 </p:panelGrid>   
+                
+                 <br/><br/>
+                                
+                 <p:dataTable id="data" value="#{congresoBean.listaCongresos}" var="congresos" >
+                   
+                     <p:column headerText="Locacion" >
+                         <p:outputLabel value="#{congresos.cod_loc}">
+                     </p:outputLabel>
+                    </p:column>
+                    <p:column headerText="Fecha" >
+                        <p:outputLabel value="#{congresos.fecha}" />
+                    </p:column>
+                     <p:column headerText="Titulo" >
+                         <p:outputLabel value="#{congresos.titulo}" />
+                    </p:column>
+                    
+                     
+                    <p:column headerText="Modificar">
+                        <p:commandLink value="Modificar" actionListener="#{congresoBean.leerID(congresos)}" oncomplete="PF('widDatos').show();" update=":dlDatos" />
+                    </p:column>
+                    <p:column headerText="Eliminar">
+                        <p:commandLink value="Eliminar" actionListener="#{congresoBean.eliminar(congresos)}" update="data" />
+                    </p:column>
+                </p:dataTable>
+                
+                </h:form>
+        
+        
+        <p:dialog header="Sub Menú de Modificación" widgetVar="widDatos" id="dlDatos">
+            <h:form>
+                <p:panelGrid columns="2">
+                    
+                <p:outputLabel value="Codigo Congreso" />
+                <p:outputLabel value="#{congresoBean.congreso.cod_congreso}" />
+                
+                <p:outputLabel value="Locacion" />
+                <p:inputText value="#{congresoBean.congreso.cod_loc}" />
+                
+                <p:outputLabel for="button" value="Fecha:" />
+                <p:calendar id="button" value="#{congresoBean.congreso.fecha}" showOn="button" readonlyInput="true" />
+                              
+                            
+                <p:outputLabel value="Titulo" />
+                <p:inputText value="#{congresoBean.congreso.titulo}" />
+                
+                <p:commandButton value="Modificar" actionListener="#{congresoBean.modificar()}" oncomplete="PF('widDatos').hide();" update=":editor:data"/>
+                <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('widDatos').hide();" />
+                
+                </p:panelGrid>
+                
+             
+            </h:form>
+        </p:dialog>
+          
+    </h:body>
+</html>
+

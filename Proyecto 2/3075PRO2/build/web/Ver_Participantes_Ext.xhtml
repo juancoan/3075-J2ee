@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Mantenimiento de Hospitales</title>
+    </h:head>
+    <h:body>
+              
+       
+        
+        <f:event type="preRenderView" listener="#{par_ExtBean.listar()}" />
+       
+        
+                                           
+        <p:dataTable id="data" value="#{par_ExtBean.lista}" var="participaciones" >
+                   
+                    <p:column headerText="Codigo Participacion" >
+                        <p:outputLabel value="#{participaciones.cod_participacion}" />
+                    </p:column>
+                     <p:column headerText="Nombre" >
+                         <p:outputLabel value="#{participaciones.nombre}" />
+                    </p:column>
+                     <p:column headerText="Apellido" >
+                         <p:outputLabel value="#{participaciones.apellido}" />
+                      </p:column>
+                    <p:column headerText="Nacionalidad" >
+                        <p:outputLabel value="#{participaciones.nacionalidad}" />
+                    </p:column>
+                    <p:column headerText="Congreso Asistido" >
+                        <p:outputLabel value="#{participaciones.titulo}" />
+                    </p:column>
+                     <p:column headerText="Fecha del Congreso" >
+                         <p:outputLabel value="#{participaciones.fecha}" />
+                    </p:column>
+                    <p:column headerText="Hospital Representado" >
+                        <p:outputLabel value="#{participaciones.hospital}" />
+                    </p:column>
+                 
+                </p:dataTable>
+                
+                
+        
+        
+    
+          
+    </h:body>
+</html>
+

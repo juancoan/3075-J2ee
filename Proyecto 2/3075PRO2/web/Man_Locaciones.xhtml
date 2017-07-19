@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+              
+       
+        <f:event type="preRenderView" listener="#{paisBean.listar()}" />
+        <f:event type="preRenderView" listener="#{localizacionBean.listar()}" />
+        
+                <h:form id="editor">
+                A continuación introduzca los datos si desea agrear un nuevo registro.
+                <br/><br/>
+                <p:outputLabel value="Pais" />
+                <p:selectOneMenu id="Pais" value="#{localizacionBean.localizacion.cod_pais}">
+                <f:selectItem itemLabel="Seleccione Pais" itemValue="" noSelectionOption="true" />  
+                <f:selectItems value="#{paisBean.listaPaises}" var="pais" itemLabel="#{pais.nombre}" itemValue="#{pais.cod_pais}"/>
+                </p:selectOneMenu>
+                <br />
+                <br />
+                <p:outputLabel for="txtNombre" value="Ciudad" />
+                <p:inputText id="txtNombre" value="#{localizacionBean.localizacion.ciudad}" />
+                <br />
+                <br />
+                <p:outputLabel for="txtCiudad" value="Provincia" />
+                <p:inputText id="txtCiudad" value="#{localizacionBean.localizacion.provincia}" />
+                <br />  
+                <br />
+                <p:commandButton value="Registrar" actionListener="#{localizacionBean.registrar()}" action="#{paisBean.listar()}"  update="data"/>
+                
+                <br/><br/>
+                    
+                    
+                                
+                <p:dataTable id="data" value="#{localizacionBean.listaLocaciones}" var="localizacion" >
+                   
+                    <p:column headerText="Codigo Localizacion" >
+                        <p:outputLabel value="#{localizacion.cod_loc}" />
+                    </p:column>
+                     <p:column headerText="Pais" >
+                        <p:outputLabel value="#{localizacion.cod_pais}">
+                        <f:converter  converterId="PaisConverter" />
+                    </p:outputLabel>
+                    </p:column>
+                    <p:column headerText="Ciudad" >
+                        <p:outputLabel value="#{localizacion.ciudad}" />
+                    </p:column>
+                     <p:column headerText="Provincia" >
+                         <p:outputLabel value="#{localizacion.provincia}" />
+                    </p:column>
+                    <p:column headerText="Modificar">
+                        <p:commandLink value="Modificar" actionListener="#{localizacionBean.leerID(localizacion)}" oncomplete="PF('widDatos').show();" update=":dlDatos" />
+                    </p:column>
+                    <p:column headerText="Eliminar">
+                        <p:commandLink value="Eliminar" actionListener="#{localizacionBean.eliminar(localizacion)}" update="data" />
+                    </p:column>
+                </p:dataTable>
+                
+                </h:form>
+        
+        
+        <p:dialog header="Sub Menú de Modificación" widgetVar="widDatos" id="dlDatos">
+            <h:form>
+                <p:panelGrid columns="2">
+                    
+                <p:outputLabel value="Codigo" />
+                <p:outputLabel value="#{localizacionBean.localizacion.cod_loc}" />
+                
+                <p:outputLabel value="Pais" />
+                <p:selectOneMenu id="Pais" value="#{localizacionBean.localizacion.cod_pais}">
+                <f:selectItem itemLabel="Seleccione Pais" itemValue="" noSelectionOption="true" />  
+                <f:selectItems value="#{paisBean.listaPaises}" var="pais" itemLabel="#{pais.nombre}" itemValue="#{pais.cod_pais}"/>
+                </p:selectOneMenu>
+                
+                <p:outputLabel value="Ciudad" />
+                <p:inputText value="#{localizacionBean.localizacion.ciudad}"/> 
+                
+                <p:outputLabel value="Provincia" />
+                <p:inputText value="#{localizacionBean.localizacion.provincia}"/> 
+                
+                
+                <p:commandButton value="Modificar" actionListener="#{localizacionBean.modificar()}" oncomplete="PF('widDatos').hide();" update=":editor:data"/>
+                <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('widDatos').hide();" />
+                
+                </p:panelGrid>
+                
+             
+            </h:form>
+        </p:dialog>
+          
+    </h:body>
+</html>
+

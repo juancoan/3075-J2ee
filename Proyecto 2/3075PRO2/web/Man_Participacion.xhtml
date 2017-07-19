@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Mantenimiento Participaciones</title>
+    </h:head>
+    <h:body>
+              
+       
+        <f:event type="preRenderView" listener="#{participacionBean.listar()}" />
+      
+        
+                <h:form id="editor">
+                A continuación introduzca los datos si desea agrear un nuevo registro.
+                <br/><br/>
+                
+                <p:panelGrid columns="2">
+                <p:outputLabel value="Codigo Medico" />
+                <p:inputText id="txtCodMed" value="#{participacionBean.participacion.cod_medico}" />
+                
+                <p:outputLabel value="Codigo Congreso" />
+                <p:inputText id="txtCodCon" value="#{participacionBean.participacion.cod_congreso}" />
+                
+                <p:outputLabel value="Codigo Hospital" />
+                <p:inputText id="CodHos" value="#{participacionBean.participacion.cod_hospital}" />
+              
+            
+                <p:commandButton value="Registrar" actionListener="#{participacionBean.registrar()}" update="data"/>
+                
+               
+                    
+                 </p:panelGrid>   
+                
+                 <br/><br/>
+                                
+                 <p:dataTable id="data" value="#{participacionBean.listaParticipaciones}" var="ps" >
+                   
+                    <p:column headerText="Codigo Participacion" >
+                        <p:outputLabel value="#{ps.cod_participacion}" />
+                    </p:column>
+                     
+                    <p:column headerText="Codigo Medico" >
+                        <p:outputLabel value="#{ps.cod_medico}" />
+                    </p:column>
+                     <p:column headerText="Codigo Congreso" >
+                         <p:outputLabel value="#{ps.cod_congreso}">
+                     </p:outputLabel>
+                    </p:column>
+                    <p:column headerText="Codigo Hospital" >
+                        <p:outputLabel value="#{ps.cod_hospital}" />
+                    </p:column>
+                     
+                     
+                    <p:column headerText="Modificar">
+                        <p:commandLink value="Modificar" actionListener="#{participacionBean.leerID(ps)}" oncomplete="PF('widDatos').show();" update=":dlDatos" />
+                    </p:column>
+                    <p:column headerText="Eliminar">
+                        <p:commandLink value="Eliminar" actionListener="#{participacionBean.eliminar(ps)}" update="data" />
+                    </p:column>
+                </p:dataTable>
+                
+                </h:form>
+        
+        
+        <p:dialog header="Sub Menú de Modificación" widgetVar="widDatos" id="dlDatos">
+            <h:form>
+                <p:panelGrid columns="2">
+                    
+                <p:outputLabel value="Codigo Participacion" />
+                <p:outputLabel value="#{participacionBean.participacion.cod_participacion}" />
+                
+                <p:outputLabel value="Codigo Medico" />
+                <p:inputText value="#{participacionBean.participacion.cod_medico}" />
+                
+                <p:outputLabel value="Codigo Congreso" />
+                <p:inputText value="#{participacionBean.participacion.cod_congreso}" />
+                
+                <p:outputLabel value="Codigo Hospital" />
+                <p:inputText value="#{participacionBean.participacion.cod_hospital}" />
+                
+                <p:commandButton value="Modificar" actionListener="#{participacionBean.modificar()}" oncomplete="PF('widDatos').hide();" update=":editor:data"/>
+                <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('widDatos').hide();" />
+                
+                </p:panelGrid>
+                
+             
+            </h:form>
+        </p:dialog>
+          
+    </h:body>
+</html>
+

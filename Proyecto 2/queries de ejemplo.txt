@@ -1,0 +1,13 @@
+select a.cod_congreso,  a.fecha, a.titulo as Titulo,
+
+	c.nombre as Pais, b.ciudad as Ciudad, b.provincia as Provincia 
+
+        from congreso as a, localizacion as b, pais as c where a.cod_loc = b.cod_loc and b.cod_pais = c.cod_pais
+
+
+select a.cod_participacion, b.nombre, b.apellido, c.titulo, c.fecha, d.nombre as Hospital 
+
+from participacion as a, medico as b, congreso as c, hospital as d 
+
+where a.cod_medico = b.cod_medico and a.cod_congreso = c.cod_congreso and a.cod_hospital = d.cod_hospital
+
